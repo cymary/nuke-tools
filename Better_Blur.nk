@@ -1,12 +1,13 @@
 set cut_paste_input [stack 0]
-version 10.5 v1
+version 11.2 v5
 push $cut_paste_input
 Group {
- name BLUR3
+ name BLUR24
  selected true
- xpos 2344
- ypos 5937
+ xpos -1717
+ ypos 753
  addUserKnob {20 User}
+ addUserKnob {1 info t info}
  addUserKnob {41 steping T NoOp1.steping}
 }
  Input {
@@ -20,73 +21,73 @@ Group {
   xpos -40
   ypos 424
  }
-set N50b70000 [stack 0]
+set Nbc97c00 [stack 0]
  Dot {
   name Dot12
   xpos 109
   ypos 427
  }
-set Nfa040000 [stack 0]
+set Nbc97880 [stack 0]
  Dot {
   name Dot13
   xpos 219
   ypos 427
  }
-set N6e411800 [stack 0]
+set Nbc97500 [stack 0]
  Dot {
   name Dot14
   xpos 301
   ypos 427
  }
-set N173a9400 [stack 0]
+set Nbc97180 [stack 0]
  Dot {
   name Dot15
   xpos 417
   ypos 427
  }
-set Nfa040800 [stack 0]
+set Nbc96e00 [stack 0]
  Dot {
   name Dot16
   xpos 527
   ypos 427
  }
-set N18f1b000 [stack 0]
-push $N18f1b000
+set Nbc96a80 [stack 0]
+push $Nbc96a80
  Blur {
   size {{curve*parent.NoOp1.steping*16*2*2 x1112 1} {curve*parent.NoOp1.steping*16*2*2 x1112 1}}
   name Blur8
   xpos 497
   ypos 532
  }
-push $Nfa040800
+push $Nbc96e00
  Blur {
   size {{curve*parent.NoOp1.steping*16*2 x1112 1} {curve*parent.NoOp1.steping*16*2 x1112 1}}
   name Blur7
   xpos 383
   ypos 532
  }
-push $N173a9400
+push $Nbc97180
  Blur {
   size {{curve*parent.NoOp1.steping*16 x1112 1} {curve*parent.NoOp1.steping*16 x1112 1}}
   name Blur6
   xpos 267
   ypos 534
  }
-push $N6e411800
+push $Nbc97500
  Blur {
   size {{curve*parent.NoOp1.steping*4 x1112 1} {curve*parent.NoOp1.steping*4 x1112 1}}
   name Blur5
   xpos 185
   ypos 534
  }
-push $Nfa040000
+push $Nbc97880
  Blur {
   size {{curve*parent.NoOp1.steping*2 x1112 1} {curve*parent.NoOp1.steping*2 x1112 1}}
   name Blur4
   xpos 75
   ypos 538
  }
-push $N50b70000
+push $Nbc97c00
  Blur {
   size {{curve*parent.NoOp1.steping x1112 1} {curve*parent.NoOp1.steping x1112 1}}
   name Blur3
@@ -153,6 +154,6 @@ push $N50b70000
   ypos 539
   addUserKnob {20 User}
   addUserKnob {14 steping R 0 100}
-  steping {11 11}
+  steping 0.06
  }
 end_group
