@@ -1,0 +1,1065 @@
+#! C:/Program Files/Nuke10.5v1/nuke-10.5.1.dll -nx
+version 10.5 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1920" h="1040" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1241" stretch="1"/>
+            <splitter orientation="2">
+                <split size="572"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="402"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name X:/Keying/Steve_tutorial_Despill-discolorEdge_v001_tec.nk
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+ addUserKnob {20 mariTab l Mari}
+ addUserKnob {26 cmdStatus l "listen status" t "The status of Nuke's command port" T <b>Disabled</b>}
+ addUserKnob {26 sendStatus l "send status" t "The status of Nuke's connection to Mari" T <b>Inactive</b>}
+ addUserKnob {3 socketPort l "nuke command port" t "Port to listen on. Make sure this matches the command port set in Mari's \"Nuke\" Palette."}
+ socketPort 50107
+ addUserKnob {6 enableSocket l enabled -STARTLINE}
+ addUserKnob {26 divider l "" +STARTLINE}
+ addUserKnob {20 advanced n 1}
+ advanced 0
+ addUserKnob {3 portRange l "port range" t "If the main specified command port is unavailable, Nuke will try using the next port number, and continue until successful or the indicated number of ports have been tried."}
+ portRange 200
+ addUserKnob {4 enablePortRange l "" t "Indicates whether to use a range of ports up to the given number, or to use only the single one specified." -STARTLINE M {"use range" "single port only"}}
+ addUserKnob {6 localhostOnly l "local host only" t "This determines whether the Mari bridge server will listen for connections from any machine, or from \"localhost\" (the local machine) only.<p>Only allowing connections from localhost is more secure, but will prevent you from using the Nuke&lt;&gt;Mari workflow across the network." +STARTLINE}
+ addUserKnob {1 hostName l "mari host" t "The machine name or IP address that Mari is running on.\nLeave empty if both Mari and Nuke are running on the same machine."}
+ hostName localhost
+ addUserKnob {3 socketPortSend l port t "Port that Mari is listening to. Make sure this matches the command port set in Mari's preferences." -STARTLINE}
+ socketPortSend 6100
+ addUserKnob {2 mariDataDir l "mari data dir" t "Path to directory that will hold transient data to be sent to Mari (exrs, objs and fbx files). If this is left empty, a \"mari\" directory will be created in the nk file's location"}
+ mariDataDir "\[getenv NUKE_TEMP_DIR]/mariData"
+ addUserKnob {2 mariLocation l "mari launch path" t "The path to launch Mari from.<br>This can also be set using the <b>MARI_INSTALL_PATH</b> environment variable."}
+ mariLocation "C:/Program Files/Mari3.1v1/Bundle/bin/Mari3.1v1.exe"
+ addUserKnob {20 endGroup n -1}
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode24
+ tile_color 0x434343ff
+ label "despill replacement "
+ note_font_size 42
+ xpos -883
+ ypos -527
+ bdwidth 1966
+ bdheight 988
+ z_order -1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode19
+ tile_color 0x545454ff
+ label "Loose key"
+ note_font_size 42
+ xpos -670
+ ypos -208
+ bdwidth 269
+ bdheight 580
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode20
+ tile_color 0x545454ff
+ label "Core key"
+ note_font_size 42
+ xpos -79
+ ypos -205
+ bdwidth 269
+ bdheight 580
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode21
+ tile_color 0x545454ff
+ label "Hair Detail"
+ note_font_size 42
+ xpos -367
+ ypos -203
+ bdwidth 250
+ bdheight 584
+}
+Dot {
+ inputs 0
+ name Dot57
+ label "DESPILL COLOR REPLACEMENT"
+ note_font_size 150
+ xpos -834
+ ypos -715
+}
+Read {
+ inputs 0
+ file "J:/Lyndda/KeyMaster/Ex_Files_VFX_Key_Master/Ex_Files_VFX_Key_Master/Exercise Files/Media/dancing couple.dpx"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ origset true
+ name Read46
+ xpos 441
+ ypos -445
+}
+Denoise2 {
+ analysisRegion {84 569 184 669}
+ analysisFrame 1025
+ needsAnalyzing false
+ profileCurve {profile {curve x0.1000000015 0 x0.1333521456 0 x0.1778279394 0 x0.2371373773 0 x0.3162277639 0 x0.4216965139 0 x0.5623413324 0 x0.7498942018 0 x1 0}}
+ serializeKnob "0.688265 0.594737 0.618147
+0.00436506 0.00224257 0.00204244
+0.00436506 0.00224257 0.00204244
+0.00369385 0.00128165 0.00128412
+0 0 0
+0.00179901 0.00218552 0.0021853
+0.00179901 0.00218552 0.0021853
+0.00161914 0.00138908 0.00136104
+0 0 0
+0.000844893 0.00109976 0.00105592
+0.000844893 0.00109976 0.00105592
+0.000579517 0.000740155 0.000736868
+0 0 0
+0.00038025 0.000479514 0.000596665
+0.00038025 0.000479514 0.000596665
+0.000210092 0.000253718 0.000433228
+0 0 0 0 0 0 0 0 0 
+6283053835843579925"
+ name Denoise15
+ xpos 441
+ ypos -332
+}
+Dot {
+ name Dot55
+ xpos 463
+ ypos -128
+}
+set N39a0d400 [stack 0]
+Dot {
+ name Dot52
+ xpos 50
+ ypos -128
+}
+set N39a0d000 [stack 0]
+Primatte3 {
+ data { 5
+    28009 37012 27179
+    65552
+    0 5
+    30234 30234 30234 0
+    1 2187.99 1 1 6293.26 1 1 1 1003.59 653.506 1 2878.56 1 1 2601.96 5363.72 1830.77 504.636 1664.96 1489.08 553.641 1 2275.18 228.08 3021.59 1 31.4538 1 451.943 1307.33 1 1 1 815.675 1340.22 1049.63 470.755 5751.37 305.645 7825.45 1 5773.08 1 1 495.401 2685.79 1358.68 694.411 1 410.879 1 793.447 4646.44 1 639.246 3421.96 354.971 2123.94 8465.77 4554.1 1 223.65 1 1 1358.1 1
+    11630.7 130560 130560 130560 6293.26 130560 130560 130560 130560 130560 130560 130560 130560 10140.1 6299.62 21883.4 45562.9 7495.82 130560 24264 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 40636.6 10197.2 8174.38 5168.26 130560 7223.57 130560 7825.45 38149.5 5773.08 130560 130560 130560 130560 130560 130560 130560 130560 130560 17334.6 47770.8 18859 7313.12 7286.48 130560 130560 12704.9 130560 130560 31285 87517.5 5853.93 3964.55 5836.74
+    11630.7 130560 130560 130560 6293.26 130560 130560 130560 130560 130560 130560 130560 130560 10140.1 6430.23 21883.4 45562.9 7495.82 130560 24264 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 40636.6 10197.2 8174.38 5168.26 130560 7223.57 130560 7825.45 38149.5 5773.08 130560 130560 130560 130560 130560 130560 130560 130560 130560 17334.6 47770.8 18859 7313.12 7286.48 130560 130560 12704.9 130560 130560 31285 87517.5 5853.93 3964.55 5836.74
+    -2.83241e+010 -3.55743e+010 -3.55743e+010 1.65282e+011 9.9244e+010 9.9244e+010
+    -3.79913e+009 -2.34948e+010 -2.34948e+010 -2.39966e+011 2.43725e+010 2.43725e+010
+    -2.75606e+008 -2.22551e+014 -2.22551e+014 2.79974e+010 -4.78244e+013 -4.78244e+013
+    -2.01685e+008 -2.22551e+014 -2.22551e+014 1.73984e+010 -6.33199e+013 -6.33199e+013
+    -2.8431e+010 -2.8431e+010 -2.8431e+010 5.44851e+010 5.44851e+010 5.44851e+010
+    -3.81347e+009 -1.87771e+010 -1.87771e+010 -2.55817e+011 3.07918e+009 3.07918e+009
+    -1.50417e+009 -2.22551e+014 -2.22551e+014 -1.13846e+010 -6.28607e+013 -6.28607e+013
+    -1.10074e+009 -2.22551e+014 -2.22551e+014 -2.51945e+010 -7.83563e+013 -7.83563e+013
+    -4.65265e+008 -1.41798e+014 -1.41798e+014 -7.02468e+010 1.33072e+014 1.33072e+014
+    -1.63637e+008 -6.81043e+013 -6.81043e+013 -1.92249e+010 2.25377e+014 2.25377e+014
+    -126.75 -4.06321e+014 -4.06321e+014 -7.6453e+006 2.57636e+013 2.57636e+013
+    -134144 -7.5513e+013 -7.5513e+013 -1.048e+010 -9.60054e+013 -9.60054e+013
+    -91.5 -4.56922e+012 -4.56922e+012 -7.0715e+006 3.36237e+013 3.36237e+013
+    -634880 -5.48756e+010 -5.60133e+010 -4.23858e+010 -3.72061e+009 -2.50256e+010
+    -41728 -4.06321e+014 -4.06321e+014 -2.75882e+009 3.27126e+011 3.27126e+011
+    -119 -5.8692e+013 -5.8692e+013 -1.08473e+006 -2.04372e+014 -2.04372e+014
+    -9.79116e+008 -6.81043e+013 -6.81043e+013 -8.56122e+010 1.27477e+014 1.27477e+014
+    -4.06989e+008 -6.87561e+010 -7.01817e+010 1.04891e+010 2.63066e+011 2.5062e+011
+    -1.12241e+008 -4.06321e+014 -4.06321e+014 1.90817e+010 2.76048e+013 2.76048e+013
+    -0.182617 -4.06321e+014 -4.06321e+014 -142.417 -2.34708e+012 -2.34708e+012
+    -102400 -1.41798e+014 -1.41798e+014 -6.78759e+009 2.01429e+014 2.01429e+014
+    -92.5 -3.05629e+011 -3.05629e+011 -1.15929e+007 7.52137e+011 7.52137e+011
+    -119 -4.06321e+014 -4.06321e+014 4.77266e+006 -1.22096e+014 -1.22096e+014
+    -216320 -1.0026e+013 -1.0026e+013 -8.52848e+009 -1.78991e+013 -1.78991e+013
+    -6.56271e+009 -5.24559e+014 -5.24559e+014 1.13679e+011 2.05589e+014 2.05589e+014
+    -53376 -2.93824e+013 -2.93824e+013 -4.21547e+009 -8.1828e+013 -8.1828e+013
+    -1.26539e+009 -5.24559e+014 -5.24559e+014 -5.36651e+010 1.07988e+014 1.07988e+014
+    -116 -5.24559e+014 -5.24559e+014 1.17033e+007 -5.11586e+013 -5.11586e+013
+    -0.237305 -3.51624e+014 -3.51624e+014 3001.3 4.80686e+012 4.80686e+012
+    -0.236328 -8.16627e+010 -8.16627e+010 -6377.63 3.19954e+011 3.19954e+011
+    -0.237305 -5.24559e+014 -5.24559e+014 -2723.37 -4.64425e+013 -4.64425e+013
+    -183 -7.81337e+011 -7.81337e+011 -929048 -8.82058e+011 -8.82058e+011
+    -2.21436e+010 -8.27049e+011 -8.27049e+011 2.62465e+011 1.55108e+012 1.55108e+012
+    -1.92731e+010 -2.10292e+011 -2.10292e+011 -1.6122e+009 2.54681e+011 2.54681e+011
+    -136704 -4.06322e+014 -4.06322e+014 8.76322e+009 -4.09302e+013 -4.09302e+013
+    -302 -4.06321e+014 -4.06321e+014 4.27904e+006 -1.34125e+014 -1.34125e+014
+    -1.18959e+008 -2.47174e+011 -2.47174e+011 1.32417e+010 -4.25822e+011 -4.25822e+011
+    -6.77185e+008 -2.35663e+010 -2.40549e+010 4.35838e+010 2.0717e+010 2.62941e+010
+    -1.71287e+008 -4.06321e+014 -4.06321e+014 -1.43705e+010 -6.72291e+013 -6.72291e+013
+    -1.67511e+009 -1.4867e+014 -1.4867e+014 -3.87373e+010 -1.94091e+014 -1.94091e+014
+    -40192 -2.22551e+014 -2.22551e+014 -6.55769e+009 6.55002e+013 6.55002e+013
+    -47.125 -2.22551e+014 -2.22551e+014 -4.14986e+006 4.88195e+013 4.88195e+013
+    -45.25 -2.22551e+014 -2.22551e+014 -2.83041e+006 4.38387e+013 4.38387e+013
+    -4704 -3.6845e+012 -3.6845e+012 1.94378e+007 -1.48754e+013 -1.48754e+013
+    -0.100098 -6.50293e+013 -6.50293e+013 -1676.24 1.32931e+014 1.32931e+014
+    -109568 -9.69486e+010 -9.69486e+010 -6.28865e+009 9.16294e+010 9.16294e+010
+    -22.5313 -2.22551e+014 -2.22551e+014 3.06187e+006 2.99876e+013 2.99876e+013
+    -0.100098 -6.92688e+013 -6.92688e+013 -3765.69 -1.24005e+014 -1.24005e+014
+    -5.04476e+008 -4.06321e+014 -4.06321e+014 -4.27966e+010 1.3959e+014 1.3959e+014
+    -3680 -2.27595e+013 -2.27595e+013 1.7181e+008 2.65677e+014 2.65677e+014
+    -1.84532e+009 -4.06321e+014 -4.06321e+014 6.32074e+010 1.03306e+014 1.03306e+014
+    -0.183105 -4.06321e+014 -4.06321e+014 474.954 8.27022e+012 8.27022e+012
+    -0.183105 -4.06321e+014 -4.06321e+014 2885.03 4.90696e+013 4.90696e+013
+    -0.184082 -4.40399e+011 -4.40399e+011 -6039.49 3.31801e+012 3.31801e+012
+    -0.183105 -4.06321e+014 -4.06321e+014 -2669.6 -4.54166e+013 -4.54166e+013
+    -118272 -3.27248e+011 -3.27248e+011 -1.38515e+009 -2.52475e+011 -2.52475e+011
+    -2.2732e+010 -8.55577e+012 -8.55577e+012 3.03259e+011 2.7186e+013 2.7186e+013
+    -1.34154e+009 -7.91222e+010 -8.07627e+010 -7.944e+010 8.05673e+010 9.55935e+010
+    -8.63195e+008 -5.24559e+014 -5.24559e+014 -4.82181e+010 1.02583e+013 1.02583e+013
+    -0.235352 -5.24559e+014 -5.24559e+014 -3809.88 -6.48655e+013 -6.48655e+013
+    -96512 -4.38653e+013 -4.38653e+013 -4.28074e+009 5.36701e+013 5.36701e+013
+    -161280 -4.10039e+010 -4.10039e+010 -1.82145e+010 3.04153e+010 3.04153e+010
+    -62720 -5.24559e+014 -5.24559e+014 2.9265e+009 -1.45436e+014 -1.45436e+014
+    -868352 -2.5483e+013 -2.5483e+013 1.01156e+010 -5.40844e+013 -5.40844e+013
+    -4.76808e+010 -3.66671e+011 -3.66671e+011 2.51974e+011 7.16953e+011 7.16953e+011
+    -1.70628e+009 -4.33128e+010 -4.42108e+010 6.17331e+010 1.76585e+011 1.95186e+011
+    -5.66409e+008 -4.06322e+014 -4.06322e+014 2.89189e+010 -3.99514e+013 -3.99514e+013
+    -101 -4.06321e+014 -4.06321e+014 3.52946e+006 -6.9041e+013 -6.9041e+013
+    -5.84991e+008 -2.03656e+012 -2.03656e+012 -1.53097e+011 1.28996e+013 1.28996e+013
+    -7.22362e+008 -3.13228e+010 -3.13228e+010 -1.09895e+011 -1.86181e+010 -1.86181e+010
+    -1.48129e+008 -4.06321e+014 -4.06321e+014 1.01753e+010 -1.32313e+014 -1.32313e+014
+    -1.40902e+006 -1.4867e+014 -1.4867e+014 -1.98067e+010 -1.90437e+014 -1.90437e+014
+    -3.12898e+009 -4.06321e+014 -4.06321e+014 -6.19395e+010 1.40452e+014 1.40452e+014
+    -64.625 -4.06321e+014 -4.06321e+014 -4.91726e+006 4.54166e+013 4.54166e+013
+    -1.64937e+008 -4.06321e+014 -4.06321e+014 3.14747e+009 1.02443e+014 1.02443e+014
+    -2832 -4.06321e+014 -4.06321e+014 2.91699e+008 -4.90696e+013 -4.90696e+013
+    -0.184082 -2.72367e+014 -2.72367e+014 -474.954 8.74739e+013 8.74739e+013
+    -150 -1.10188e+011 -1.10188e+011 3.92923e+006 3.69283e+011 3.69283e+011
+    -0.18335 -4.06321e+014 -4.06321e+014 690.382 1.19233e+013 1.19233e+013
+    -0.183105 -1.41879e+012 -1.41879e+012 -8234.14 -6.69401e+012 -6.69401e+012
+    -21312 -2.22551e+014 -2.22551e+014 -3.56234e+009 6.4315e+013 6.4315e+013
+    -4160 -1.24128e+012 -1.24128e+012 -9.18021e+008 -4.95148e+012 -4.95148e+012
+    -29952 -2.22551e+014 -2.22551e+014 1.7014e+009 4.50239e+013 4.50239e+013
+    -0.100342 -2.22551e+014 -2.22551e+014 1676.24 2.83432e+013 2.83432e+013
+    -30.5156 -2.22551e+014 -2.22551e+014 -2.66082e+006 5.04639e+013 5.04639e+013
+    -0.100098 -2.02403e+013 -2.02403e+013 -2576.31 9.5803e+012 9.5803e+012
+    -0.100098 -2.22551e+014 -2.22551e+014 -2865.62 -4.88195e+013 -4.88195e+013
+    -122880 -2.87772e+011 -2.87772e+011 1.99657e+010 2.58093e+011 2.58093e+011
+    -1.66367e+010 -1.78138e+013 -1.78138e+013 6.22799e+010 6.06045e+013 6.06045e+013
+    -1.53565e+009 -4.90688e+012 -4.90688e+012 -1.80488e+011 6.76757e+012 6.76757e+012
+    -222976 -5.24559e+014 -5.24559e+014 -1.47303e+010 8.99463e+012 8.99463e+012
+    -115.25 -5.24559e+014 -5.24559e+014 -9.48999e+006 -1.48888e+014 -1.48888e+014
+    -26496 -4.83741e+012 -4.83741e+012 -1.16817e+009 -1.8846e+013 -1.8846e+013
+    -829440 -3.43592e+010 -3.50715e+010 -9.40039e+010 8.61173e+010 8.06631e+010
+    -96512 -5.24559e+014 -5.24559e+014 4.48284e+009 -6.14131e+013 -6.14131e+013
+    -714752 -2.77239e+013 -2.77239e+013 -1.5924e+010 -5.66442e+013 -5.66442e+013
+    -6.22202e+010 -1.17278e+011 -1.17278e+011 3.05108e+011 2.76391e+011 2.76391e+011
+    -3.37338e+009 -4.4422e+010 -4.4422e+010 -1.39413e+011 8.02411e+010 8.02411e+010
+    -2.79476e+008 -3.63425e+014 -3.63425e+014 -2.07328e+010 -6.04846e+013 -6.04846e+013
+    -150016 -3.63425e+014 -3.63425e+014 3.18768e+009 -1.004e+014 -1.004e+014
+    -1.64997e+009 -2.30801e+011 -2.30801e+011 -1.48295e+011 9.16321e+011 9.16321e+011
+    -1.34387e+009 -1.93166e+010 -1.93166e+010 -1.38357e+010 -8.86142e+010 -8.86142e+010
+    -4.61259e+008 -3.63425e+014 -3.63425e+014 2.08942e+010 -9.92168e+013 -9.92168e+013
+    -3.81719e+009 -1.32974e+014 -1.32974e+014 -1.49261e+010 -1.89858e+014 -1.89858e+014
+    -2.97165e+008 -3.63425e+014 -3.63425e+014 -1.61547e+010 1.21269e+014 1.21269e+014
+    -27264 -3.63425e+014 -3.63425e+014 -2.40651e+009 7.97071e+013 7.97071e+013
+    -51328 -3.63425e+014 -3.63425e+014 -3.79037e+009 6.68771e+013 6.68771e+013
+    -3.78829e+006 -6.7541e+013 -6.7541e+013 1.01937e+010 -2.77919e+014 -2.77919e+014
+    -0.164063 -7.11833e+013 -7.11833e+013 -1584.24 -4.62535e+013 -4.62535e+013
+    -178176 -7.94494e+010 -7.94494e+010 6.26742e+009 1.51187e+011 1.51187e+011
+    -37.25 -3.63425e+014 -3.63425e+014 -1.74239e+006 2.97918e+013 2.97918e+013
+    -0.164551 -1.63392e+013 -1.63392e+013 -7048.96 -6.9356e+013 -6.9356e+013
+    -7.3791e+007 -3.63425e+014 -3.63425e+014 -6.09523e+009 1.19622e+014 1.19622e+014
+    -4.40064e+006 -1.27453e+012 -1.27453e+012 -1.16311e+010 1.37373e+013 1.37373e+013
+    -1.30779e+008 -3.63425e+014 -3.63425e+014 -2.96107e+010 6.85239e+013 6.85239e+013
+    -0.163574 -3.63425e+014 -3.63425e+014 1584.24 2.69622e+013 2.69622e+013
+    -50 -3.63425e+014 -3.63425e+014 -4.29893e+006 8.25367e+013 8.25367e+013
+    -0.164063 -1.48197e+012 -1.48197e+012 -3938.27 6.49067e+012 6.49067e+012
+    -0.164551 -3.63425e+014 -3.63425e+014 -4694.93 -7.97071e+013 -7.97071e+013
+    -1.57374e+008 -7.00393e+011 -7.00393e+011 -1.00894e+010 -6.62272e+011 -6.62272e+011
+    -2.22866e+010 -5.8942e+013 -5.8942e+013 2.55603e+011 1.68713e+014 1.68713e+014
+    -2.11335e+008 -1.89346e+012 -1.89346e+012 6.68371e+008 -5.05471e+012 -5.05471e+012
+    -6.89672e+008 -6.05708e+014 -6.05708e+014 1.81555e+010 5.16377e+013 5.16377e+013
+    -135.5 -6.05708e+014 -6.05708e+014 2.95627e+006 -1.07509e+014 -1.07509e+014
+    -60.625 -9.72914e+013 -9.72914e+013 -2.67871e+006 1.4396e+014 1.4396e+014
+    -369 -3.68677e+010 -3.68677e+010 -4.17065e+007 2.3435e+011 2.3435e+011
+    -112 -6.05708e+014 -6.05708e+014 5.16357e+006 -1.02793e+014 -1.02793e+014
+    -1.00762e+006 -4.25038e+012 -4.25038e+012 -1.0171e+010 -8.30076e+012 -8.30076e+012
+    -1 -1 -1 -1
+    -1 -1 999999 999999
+    -1 -1 -1 -1
+    0.0159097 0.0159097 0.0159097
+    0 0 0
+    0.05 0.0654368 0.0654368
+    0.05 0.11768 0.126593
+    0.05 0.11768 0.11768
+    0.05 0.11768 0.11768
+    0.05 0.11768 0.11768
+    0.05 0.11768 0.11768
+  }
+
+ primEdgedata { 5
+    28009 37012 27179
+    65552
+    0 5
+    30234 30234 30234 0
+    1 2187.99 1 1 6729.95 1 1 1 1003.59 653.506 1 2878.56 1 1 2601.96 5363.72 1830.77 504.636 1664.96 1489.08 553.641 1 2275.18 228.08 3021.59 1 31.4538 1 451.943 1307.33 1 1 1 815.675 1340.22 1049.63 470.755 5751.37 305.645 9447.71 1 8056.33 1 1 495.401 2685.79 1358.68 694.411 1 410.879 1 793.447 4646.44 1 639.246 3421.96 354.971 2123.94 8465.77 4554.1 1 223.65 1 1 1358.1 1
+    11630.7 130560 130560 130560 9591.23 130560 130560 130560 130560 130560 130560 130560 130560 11140.5 6299.62 21883.4 45562.9 18439.3 130560 24264 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 40636.6 10197.2 8174.38 7850.99 130560 9843.25 130560 13301.3 38149.5 8447.39 130560 130560 130560 130560 130560 130560 130560 130560 130560 24065.2 130560 59556 7313.12 8355.17 130560 130560 17467.7 130560 130560 31285 87517.5 9928.69 7508.63 8193.55
+    11630.7 130560 130560 130560 9829.84 130560 130560 130560 130560 130560 130560 130560 130560 13269.5 6430.23 21883.4 45562.9 18439.3 130560 24264 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 40636.6 10197.2 8174.38 7850.99 130560 10032.9 130560 13739.8 38149.5 8447.39 130560 130560 130560 130560 130560 130560 130560 130560 130560 27697.9 130560 59556 7313.12 8355.17 130560 130560 32647.6 130560 130560 31285 87517.5 10347.8 7535.13 8193.55
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    -1 -1 -1 -1
+    -1 -1 999999 999999
+    -1 -1 -1 -1
+    0.0664421 0.0664421 0.123279
+    0.0671622 0.0671622 0.0818931
+    0.05 0.0970333 0.0970333
+    0.05 0.11768 0.11768
+    0.05 0.11768 0.11768
+    0.05 0.11768 0.11768
+    0.05 0.11768 0.11768
+    0.05 0.11768 0.11768
+  }
+
+ primBodydata { 5
+    28009 37012 27179
+    65552
+    0 5
+    30234 30234 30234 0
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    11630.7 130560 130560 130560 6293.26 130560 130560 130560 130560 130560 130560 130560 130560 10140.1 6299.62 21883.4 45562.9 7495.82 130560 24264 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 40636.6 10197.2 8174.38 5168.26 130560 7223.57 130560 7825.45 38149.5 5773.08 130560 130560 130560 130560 130560 130560 130560 130560 130560 17334.6 47770.8 18859 7313.12 7286.48 130560 130560 12704.9 130560 130560 31285 87517.5 5853.93 3964.55 5836.74
+    11630.7 130560 130560 130560 6293.26 130560 130560 130560 130560 130560 130560 130560 130560 10140.1 6430.23 21883.4 45562.9 7495.82 130560 24264 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 130560 40636.6 10197.2 8174.38 5168.26 130560 7223.57 130560 7825.45 38149.5 5773.08 130560 130560 130560 130560 130560 130560 130560 130560 130560 17334.6 47770.8 18859 7313.12 7286.48 130560 130560 12704.9 130560 130560 31285 87517.5 5853.93 3964.55 5836.74
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    -1 -1 -1 -1
+    -1 -1 999999 999999
+    -1 -1 -1 -1
+    0.0159097 0.0159097 0.0159097
+    0 0 0
+    0.05 0.0654368 0.0654368
+    0.05 0.11768 0.126593
+    0.05 0.11768 0.11768
+    0.05 0.11768 0.11768
+    0.05 0.11768 0.11768
+    0.05 0.11768 0.11768
+  }
+
+ crop {0 0 2048 1556}
+ "Adjust Lighting" 0
+ "Hybrid Matte" 0
+ "Fine Tuning" 0
+ name Primatte9
+ xpos 28
+}
+FilterErode {
+ channels alpha
+ name FilterErode9
+ xpos 28
+ ypos 28
+}
+Grade {
+ channels alpha
+ blackpoint 0.76
+ whitepoint 0.88
+ white_clamp true
+ name Grade13
+ xpos 28
+ ypos 65
+}
+FilterErode {
+ channels alpha
+ size 6.5
+ name FilterErode10
+ xpos 31
+ ypos 108
+}
+Blur {
+ size 8.4
+ name Blur5
+ xpos 31
+ ypos 146
+}
+set N39a0dc00 [stack 0]
+push $N39a0d000
+Dot {
+ name Dot56
+ xpos -261
+ ypos -128
+}
+set N39f55c00 [stack 0]
+Group {
+ name Unspill7
+ label "spill suppression"
+ xpos -283
+ ypos -28
+ addUserKnob {20 User l Adjustments}
+ addUserKnob {4 bkg l "Screen Color" t "Select the color of the backing region." M {green blue "" ""}}
+ addUserKnob {26 text2 l "" -STARTLINE T "      View spillmap in the alpha channel"}
+ addUserKnob {26 ""}
+ addUserKnob {7 mix l "Color Mix" t "Adjust to move spill suppression closer or further from target edges. View the alpha channel to see areas that will get spill removed." R -1 1}
+ addUserKnob {41 amtBlur l Soften T SoftenSpillMap.amtBlur}
+ addUserKnob {26 ""}
+ addUserKnob {41 Rspill l "Scale Red" T Unspill_Opertation.Rspill}
+ addUserKnob {41 Gspill l "Scale Green" T Unspill_Opertation.Gspill}
+ addUserKnob {41 Bspill l "Scale Blue" T Unspill_Opertation.Bspill}
+ addUserKnob {26 ""}
+ addUserKnob {26 text l "" +STARTLINE T "Unspill v1.7 (c) 2016     Steve Wright     www.vfxio.com"}
+}
+ Input {
+  inputs 0
+  name Src
+  xpos 509
+  ypos -253
+ }
+ Dot {
+  name Dot1
+  xpos 543
+  ypos -213
+ }
+set N39f55400 [stack 0]
+ Expression {
+  temp_name0 RGmix
+  temp_expr0 (r*(1-(mixRG+1)/2))+(g*(mixRG+1)/2)
+  temp_name1 SpillMap
+  temp_expr1 clamp(b-RGmix)
+  expr3 SpillMap
+  name Blue_SpillMap
+  xpos 555
+  ypos -163
+  addUserKnob {20 User l "Unspill Adjust"}
+  addUserKnob {7 mixRG l "Red Green mix" R -1 1}
+  mixRG {{parent.mix*2}}
+ }
+push $N39f55400
+ Expression {
+  temp_name0 RBmix
+  temp_expr0 (r*(1-(mixRB+1)/2))+(b*(mixRB+1)/2)
+  temp_name1 SpillMap
+  temp_expr1 clamp(g-RBmix)
+  expr3 SpillMap
+  name Green_SpillMap
+  xpos 450
+  ypos -162
+  addUserKnob {20 User l "Unspill Adjust"}
+  addUserKnob {7 mixRB l "Red Blue mix" R -1 1}
+  mixRB {{parent.mix*2}}
+ }
+ Switch {
+  inputs 2
+  which {{bkg}}
+  name Switch1
+  xpos 501
+  ypos -107
+ }
+ Blur {
+  channels alpha
+  size {{amtBlur}}
+  name SoftenSpillMap
+  xpos 501
+  ypos -53
+  addUserKnob {20 User l Soften}
+  addUserKnob {7 amtBlur l Soften t "increase this knob to reduce grain in despilled regions when working with grainy clips" R 0 10}
+ }
+ Dot {
+  name Dot2
+  xpos 535
+  ypos 3
+ }
+set N39ed1c00 [stack 0]
+ Input {
+  inputs 0
+  name Mask
+  xpos 755
+  ypos -5
+  number 1
+ }
+push $N39ed1c00
+ Multiply {
+  channels alpha
+  value 0
+  name Multiply1
+  xpos 635
+  ypos -4
+ }
+ ChannelMerge {
+  inputs 2
+  operation plus
+  name ChannelMerge2
+  xpos 676
+  ypos 53
+ }
+ ChannelMerge {
+  inputs 2
+  operation out
+  name ChannelMerge1
+  xpos 501
+  ypos 53
+ }
+ Expression {
+  expr0 r+(a*Rspill)
+  expr1 g+(a*(Gspill))
+  expr2 b+(a*(Bspill))
+  name Unspill_Opertation
+  xpos 501
+  ypos 125
+  addUserKnob {20 User l "Scale Channels"}
+  addUserKnob {7 Rspill l "Scale Red" t "to increase or decreas RED in the backing region" R -1 1}
+  Rspill -1
+  addUserKnob {7 Gspill l "Scale Green" t "to increase or decreas GREEN in the backing region" R -1 1}
+  Gspill -1.998
+  addUserKnob {7 Bspill l "Scale Blue" t "to increase or decreas BLUE in the backing region" R -1 1}
+  Bspill -0.997
+ }
+set N39ed0800 [stack 0]
+ Output {
+  name Output1
+  xpos 501
+  ypos 313
+ }
+push $N39ed0800
+ Viewer {
+  frame_range 1-100
+  name Viewer1
+  xpos 692
+  ypos 216
+ }
+end_group
+Clamp {
+ name Clamp3
+ xpos -283
+ ypos 21
+}
+Expression {
+ expr3 r+g+b
+ name Expression1
+ xpos -283
+ ypos 70
+}
+Grade {
+ channels alpha
+ blackpoint 0.01
+ white 1.64
+ gamma 2.6
+ black_clamp false
+ name Grade16
+ xpos -283
+ ypos 126
+}
+push $N39f55c00
+Dot {
+ name Dot51
+ xpos -518
+ ypos -128
+}
+set N39f26c00 [stack 0]
+Dot {
+ name Dot50
+ xpos -628
+ ypos -128
+}
+IBKColourV3 {
+ name IBKColourV3_26
+ xpos -650
+ ypos -9
+ screen_type green
+ Size 1
+ off {0 0.003 0.002}
+ off_panelDropped true
+ mult {0.94 1 1.01}
+ mult_panelDropped true
+ erode 5
+ multi 5
+}
+IBKColourV3 {
+ name IBKColourV3_27
+ xpos -650
+ ypos 17
+ screen_type green
+ Size 0.1
+ off {0 0.003 0.002}
+ off_panelDropped true
+ mult {0.94 1 1.01}
+ mult_panelDropped true
+ multi 100
+}
+IBKColourV3 {
+ name IBKColourV3_28
+ xpos -650
+ ypos 51
+ screen_type green
+ Size 0.1
+ off {0 0.003 0.002}
+ off_panelDropped true
+ mult {0.94 1 1.01}
+ mult_panelDropped true
+ multi 100
+}
+IBKColourV3 {
+ name IBKColourV3_29
+ xpos -650
+ ypos 77
+ screen_type green
+ Size 0.1
+ off {0 0.003 0.002}
+ off_panelDropped true
+ mult {0.94 1 1.01}
+ mult_panelDropped true
+ multi 100
+}
+IBKColourV3 {
+ name IBKColourV3_30
+ xpos -650
+ ypos 103
+ screen_type green
+ Size 0.1
+ off {0 0.003 0.002}
+ off_panelDropped true
+ mult {0.94 1 1.01}
+ mult_panelDropped true
+ multi 100
+}
+IBKColourV3 {
+ name IBKColourV3_31
+ xpos -650
+ ypos 129
+ screen_type green
+ Size 0.1
+ off {0 0.003 0.002}
+ off_panelDropped true
+ mult {0.94 1 1.01}
+ mult_panelDropped true
+ multi 100
+}
+IBKColourV3 {
+ name IBKColourV3_32
+ xpos -650
+ ypos 155
+ cached true
+ screen_type green
+ Size 0.1
+ off {0 0.003 0.002}
+ off_panelDropped true
+ mult {0.94 1 1.01}
+ mult_panelDropped true
+ multi 100
+}
+IBKColourV3 {
+ name IBKColourV3_33
+ xpos -650
+ ypos 181
+ cached true
+ screen_type green
+ Size 0.1
+ off {0 0.003 0.002}
+ off_panelDropped true
+ mult {0.94 1 1.01}
+ mult_panelDropped true
+ multi 100
+}
+push $N39f26c00
+IBKGizmoV3 {
+ inputs 2
+ name IBKGizmoV3_3
+ selected false
+ xpos -540
+ ypos 181
+ st C-green
+}
+Dot {
+ name Dot53
+ xpos -518
+ ypos 294
+}
+ChannelMerge {
+ inputs 2
+ name ChannelMerge2
+ xpos -283
+ ypos 289
+}
+Merge2 {
+ inputs 2
+ operation max
+ name Merge69
+ xpos 31
+ ypos 302
+}
+push $N39a0d400
+HueCorrect {
+ hue {sat {curve 1 1 1 0.6169154644 1 1 1}
+   lum {}
+   red {}
+   green {}
+   blue {}
+   r_sup {}
+   g_sup {curve 1 1 0.6169154644 0.288557291 1 1 1}
+   b_sup {}
+   sat_thrsh {}}
+ name HueCorrect1
+ xpos 441
+ ypos -55
+}
+set N48819c00 [stack 0]
+push $N39a0dc00
+push $N39a0d400
+push $N48819c00
+Merge2 {
+ inputs 2
+ operation minus
+ name Merge74
+ xpos 560
+ ypos -55
+}
+Saturation {
+ saturation 0
+ name Saturation1
+ xpos 560
+ ypos -2
+}
+Grade {
+ whitepoint {0.07665332407 0.07665332407 0.07665332407 0}
+ name Grade14
+ xpos 560
+ ypos 39
+}
+Merge2 {
+ inputs 2
+ operation stencil
+ name Merge70
+ xpos 560
+ ypos 152
+}
+Read {
+ inputs 0
+ file "J:/Lyndda/KeyMaster/Ex_Files_VFX_Key_Master/Ex_Files_VFX_Key_Master/Exercise Files/Media/dancing BG.jpg"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ origset true
+ name Read47
+ xpos 774
+ ypos -304
+}
+Dot {
+ name Dot54
+ xpos 796
+ ypos -136
+}
+set N48818400 [stack 0]
+Grade {
+ add {0.1520995945 0.1771240085 0.1517333835 0}
+ reverse true
+ black_clamp false
+ name Grade15
+ label "minus the desplled bg color"
+ xpos 685
+ ypos -1
+}
+Merge2 {
+ inputs 2
+ operation multiply
+ name Merge71
+ xpos 685
+ ypos 218
+}
+Merge2 {
+ inputs 2
+ operation plus
+ name Merge72
+ xpos 441
+ ypos 218
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy9
+ xpos 441
+ ypos 296
+}
+Premult {
+ name Premult15
+ xpos 441
+ ypos 371
+}
+push $N48818400
+Merge2 {
+ inputs 2
+ name Merge73
+ xpos 774
+ ypos 371
+}
+Viewer {
+ frame_range 1-100
+ name Viewer1
+ selected true
+ xpos 774
+ ypos 397
+}
